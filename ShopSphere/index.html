@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShopSphere</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<header class="navbar">
+
+    <div class="logo">
+        <img src="logo.png" alt="ShopSphere Logo">
+        <h1>ShopSphere</h1>
+    </div>
+
+    <div class="search-bar">
+        <input type="text" id="searchBox" placeholder="Search products...">
+        <button>Search</button>
+    </div>
+
+    <nav>
+        <a href="#">Home</a>
+        <a href="#">Deals</a>
+        <a href="#">Cart (<span id="cart-count">0</span>)</a>
+    </nav>
+
+</header>
+
+<!-- HERO -->
+<section class="hero">
+    <h2>Big Deals. Best Prices.</h2>
+    <p>ShopSphere - Your one-stop destination</p>
+    
+</section>
+<div class="filters">
+
+    <button onclick="filterCategory('All')">All</button>
+    <button onclick="filterCategory('Electronics')">Electronics</button>
+    <button onclick="filterCategory('Fashion')">Fashion</button>
+    <button onclick="filterCategory('Home')">Home</button>
+    <button onclick="filterCategory('Beauty')">Beauty</button>
+
+</div>
+<!-- PRODUCTS -->
+<section class="product-grid">
+
+    <div class="card" data-category="Electronics">
+        <img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9" alt="">
+        <h3>Smartphone</h3>
+        <p>High performance Android phone</p>
+        <span>₹29,999</span>
+        <button>Add to Cart</button>
+    </div>
+
+    <div class="card" data-category="Electronics">
+        <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e" alt="">
+        <h3>Headphones</h3>
+        <p>Noise cancelling premium sound</p>
+        <span>₹2,999</span>
+        <button>Add to Cart</button>
+    </div>
+
+    <div class="card" data-category="Electronics">
+        <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30" alt="">
+        <h3>Smart Watch</h3>
+        <p>Track fitness and health</p>
+        <span>₹4,999</span>
+        <button>Add to Cart</button>
+    </div>
+
+    <div class="card" data-category="Fashion">
+        <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1" alt="">
+        <h3>Fashion Wear</h3>
+        <p>Trendy stylish outfit</p>
+        <span>₹1,999</span>
+        <button>Add to Cart</button>
+    </div>
+
+    <div class="card">
+        <img src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85" alt="">
+        <h3>Home Decor</h3>
+        <p>Modern home essentials</p>
+        <span>₹1,499</span>
+        <button>Add to Cart</button>
+    </div>
+
+    <div class="card" data-category="Beauty">
+        <img src="https://images.unsplash.com/photo-1596462502278-27bfdc403348" alt="">
+        <h3>Makeup Kit</h3>
+        <p>Beauty essentials set</p>
+        <span>₹999</span>
+        <button>Add to Cart</button>
+    </div>
+
+</section>
+
+<!-- SCRIPT -->
+<script>
+let count = 0;
+
+/* CART */
+let count = 0;
+
+document.querySelectorAll(".card button").forEach(btn => {
+    btn.addEventListener("click", () => {
+        count++;
+        document.getElementById("cart-count").innerText = count;
+
+        let product = btn.parentElement.querySelector("h3").innerText;
+
+        let cart = JSON.parse(localStorage.getItem("cart")) || [];
+        cart.push(product);
+        localStorage.setItem("cart", JSON.stringify(cart));
+
+        alert(product + " added to cart 🛒");
+    });
+});
+
+/* SEARCH (FIXED) */
+const searchBox = document.getElementById("searchBox");
+const cards = document.querySelectorAll(".card");
+
+searchBox.addEventListener("input", function () {
+    let value = this.value.toLowerCase();
+
+    cards.forEach(card => {
+        let title = card.querySelector("h3").innerText.toLowerCase();
+
+        if (title.includes(value)) {
+            card.style.display = "";
+        } else {
+            card.style.display = "none";
+        }
+    });
+});
+function filterCategory(category) {
+    const cards = document.querySelectorAll(".card");
+
+    cards.forEach(card => {
+        if (category === "all") {
+            card.style.display = "";
+        } else {
+            if (card.dataset.category === category) {
+                card.style.display = "";
+            } else {
+                card.style.display = "none";
+            }
+        }
+    });
+}
+</script>
+
+</body>
+</html>

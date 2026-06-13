@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cart - ShopSphere</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header class="navbar">
+    <div class="logo">
+        <img src="logo.png" alt="ShopSphere Logo">
+        <h1>ShopSphere</h1>
+    </div>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="cart.html">Cart</a>
+    </nav>
+</header>
+
+<section class="cart-page">
+    <h2>Your Cart 🛒</h2>
+    <a href="checkout.html">
+    <button class="checkout-btn">Proceed to Checkout</button>
+</a>
+
+    <div id="cart-items"></div>
+
+    <h3>Total Items: <span id="total-items">0</span></h3>
+
+    <button class="checkout-btn">Checkout</button>
+</section>
+
+<script>
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+let cartItemsDiv = document.getElementById("cart-items");
+let totalItems = document.getElementById("total-items");
+
+function loadCart() {
+    cartItemsDiv.innerHTML = "";
+
+    cart.forEach((item, index) => {
+        let div = document.createElement("div");
+        div.className = "cart-item";
+        div.innerHTML = `
+            <p>${item}</p>
+            <button onclick="removeItem(${index})">Remove</button>
+        `;
+        cartItemsDiv.appendChild(div);
+    });
+
+    totalItems.innerText = cart.length;
+}
+
+function removeItem(index) {
+    cart.splice(index, 1);
+    localStorage.setItem("cart", JSON.stringify(cart));
+    loadCart();
+}
+
+loadCart();
+</script>
+
+</body>
+</html>

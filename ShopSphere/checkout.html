@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Checkout - ShopSphere</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<header class="navbar">
+    <div class="logo">
+        <img src="logo.png" alt="ShopSphere Logo">
+        <h1>ShopSphere</h1>
+    </div>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="cart.html">Cart</a>
+    </nav>
+</header>
+
+<!-- CHECKOUT -->
+<section class="checkout">
+
+    <h2>Checkout 🧾</h2>
+
+    <!-- ADDRESS -->
+    <div class="checkout-box">
+        <h3>Delivery Address</h3>
+        <input type="text" placeholder="Full Name">
+        <input type="text" placeholder="Phone Number">
+        <input type="text" placeholder="Address Line 1">
+        <input type="text" placeholder="City">
+        <input type="text" placeholder="Pincode">
+    </div>
+
+    <!-- ORDER SUMMARY -->
+    <div class="checkout-box">
+        <h3>Order Summary</h3>
+        <div id="order-summary"></div>
+        <p><b>Total Items:</b> <span id="total-items">0</span></p>
+    </div>
+
+    <!-- PAYMENT -->
+    <div class="checkout-box">
+        <h3>Payment</h3>
+        <p>Cash on Delivery (COD)</p>
+    </div>
+
+    <button class="place-order">Place Order</button>
+
+</section>
+
+<script>
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+let summary = document.getElementById("order-summary");
+let total = document.getElementById("total-items");
+
+function loadCheckout() {
+    summary.innerHTML = "";
+
+    cart.forEach(item => {
+        let p = document.createElement("p");
+        p.innerText = item;
+        summary.appendChild(p);
+    });
+
+    total.innerText = cart.length;
+}
+
+document.querySelector(".place-order").addEventListener("click", () => {
+    alert("Order placed successfully 🎉");
+    localStorage.removeItem("cart");
+    window.location.href = "index.html";
+});
+
+loadCheckout();
+</script>
+
+</body>
+</html>
